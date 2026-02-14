@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Forever Valentine ❤️</title>
+
+<style>
+body{
+    text-align:center;
+    font-family:'Poppins',sans-serif;
+    background:radial-gradient(circle at center,#1a001a,#000000);
+    color:white;
+    padding:30px;
+    overflow:hidden;
+}
+
+h1,h2{color:#ff4da6;}
+
+button{
+    padding:10px 20px;
+    margin:10px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+button:hover{transform:scale(1.1);}
+
+#yes{background:#ff4d88;color:white;}
+#no{background:gray;color:white;position:absolute;}
+
+.section{display:none;}
+
+img{
+    width:300px;
+    margin-top:20px;
+    border-radius:15px;
+    opacity:0;
+    transform:scale(0.8);
+    transition:opacity 2s ease, transform 6s ease;
+}
+
+.showImage{
+    opacity:1;
+    transform:scale(1.1);
+}
+
+.correctMsg{
+    font-size:20px;
+    color:#00ff99;
+    margin-top:15px;
+    display:none;
+}
+
+.final{
+    font-size:32px;
+    margin-top:40px;
+    display:none;
+    animation:fadeIn 3s ease-in;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+/* Floating Hearts */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation:floatUp 6s linear infinite;
+    color:#ff1a75;
+}
+
+@keyframes floatUp{
+    from{transform:translateY(0);}
+    to{transform:translateY(-100vh);}
+}
+
+/* Fireworks */
+.firework{
+    position:fixed;
+    width:8px;
+    height:8px;
+    background:gold;
+    border-radius:50%;
+    animation:explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+    from{transform:scale(1);}
+    to{transform:scale(18);opacity:0;}
+}
+
+/* Ring */
+.ring{
+    font-size:60px;
+    margin-top:20px;
+    animation:spin 4s infinite linear;
+}
+
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="mainTitle">Will You Be My Valentine? 💖</h1>
+
+<button id="yes" onclick="startQuiz()">Yes ❤️</button>
+<button id="no">No 😢</button>
+
+<div id="quiz" class="section">
+
+<div id="q1">
+<h2>1️⃣ When did we first talk?</h2>
+<button onclick="check(1,true)">16th July 2023</button>
+<button onclick="check(1,false)">26th July 2023</button>
+<button onclick="check(1,false)">15th Aug 2023</button>
+<button onclick="check(1,false)">Aug 28th 2023</button>
+<div id="correct1" class="correctMsg">Correct Answer ❤️</div>
+<img id="img1" src="pic1.jpg">
+</div>
+
+<div id="q2" class="section">
+<h2>2️⃣ How did I fall in love with you?</h2>
+<button onclick="check(2,true)">By pulling the bag</button>
+<button onclick="check(2,false)">By seeing your eyes</button>
+<button onclick="check(2,false)">By pulling the carriage</button>
+<div id="correct2" class="correctMsg">Correct Answer ❤️</div>
+<img id="img2" src="pic2.jpg">
+</div>
+
+<div id="q3" class="section">
+<h2>3️⃣ Where did you touch me first?</h2>
+<button onclick="check(3,true)">Neck</button>
+<button onclick="check(3,false)">Hand</button>
+<button onclick="check(3,false)">Shoulder</button>
+<button onclick="check(3,false)">Cheeks</button>
+<div id="correct3" class="correctMsg">Correct Answer ❤️</div>
+<img id="img3" src="pic3.jpg">
+</div>
+
+<div id="q4" class="section">
+<h2>4️⃣ When did our relationship start?</h2>
+<button onclick="check(4,true)">Sep 25th 2023</button>
+<button onclick="check(4,false)">Oct 25th 2023</button>
+<button onclick="check(4,false)">Sep 26th 2023</button>
+<button onclick="check(4,false)">Oct 2nd 2023</button>
+<div id="correct4" class="correctMsg">Correct Answer ❤️</div>
+<img id="img4" src="pic4.jpg">
+</div>
+
+</div>
+
+<div id="finalMsg" class="final">
+💖 I Love You So Much 💖 <br><br>
+You Are My Forever Valentine ❤️✨ <br>
+<div class="ring">💍</div>
+</div>
+
+<!-- Songs -->
+<audio id="song1" src="song1.mp3"></audio>
+<audio id="song2" src="song2.mp3"></audio>
+<audio id="song3" src="song3.mp3"></audio>
+<audio id="song4" src="song4.mp3"></audio>
+<audio id="finalsong" src="finalsong.mp3"></audio>
+
+<script>
+
+const noBtn=document.getElementById("no");
+noBtn.addEventListener("mouseover",function(){
+    noBtn.style.top=Math.random()*window.innerHeight+"px";
+    noBtn.style.left=Math.random()*window.innerWidth+"px";
+});
+
+function startQuiz(){
+    document.getElementById("yes").style.display="none";
+    document.getElementById("no").style.display="none";
+    document.getElementById("mainTitle").style.display="none";
+    document.getElementById("quiz").style.display="block";
+    document.getElementById("q1").style.display="block";
+}
+
+function fadeOut(audio){
+    let fade=setInterval(()=>{
+        if(audio.volume>0.05){
+            audio.volume-=0.05;
+        }else{
+            audio.pause();
+            audio.currentTime=0;
+            audio.volume=1;
+            clearInterval(fade);
+        }
+    },100);
+}
+
+function check(q,correct){
+    if(correct){
+
+        document.getElementById("correct"+q).style.display="block";
+        let img=document.getElementById("img"+q);
+        img.classList.add("showImage");
+
+        // Fade out all songs
+        for(let i=1;i<=4;i++){
+            fadeOut(document.getElementById("song"+i));
+        }
+
+        let currentSong=document.getElementById("song"+q);
+        currentSong.play();
+
+        setTimeout(()=>{
+            if(q<4){
+                document.getElementById("q"+q).style.display="none";
+                document.getElementById("q"+(q+1)).style.display="block";
+            }else{
+                endLove();
+            }
+        },7000);
+
+    }else{
+        alert("Wrong answer 😜 Try again!");
+    }
+}
+
+function endLove(){
+    document.getElementById("q4").style.display="none";
+    document.getElementById("finalMsg").style.display="block";
+
+    document.getElementById("finalsong").play();
+
+    createHearts();
+    createFireworks();
+}
+
+function createHearts(){
+    setInterval(()=>{
+        let heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="❤️";
+        heart.style.left=Math.random()*100+"vw";
+        document.body.appendChild(heart);
+        setTimeout(()=>{heart.remove();},6000);
+    },300);
+}
+
+function createFireworks(){
+    setInterval(()=>{
+        let fw=document.createElement("div");
+        fw.classList.add("firework");
+        fw.style.left=Math.random()*100+"vw";
+        fw.style.top=Math.random()*100+"vh";
+        document.body.appendChild(fw);
+        setTimeout(()=>{fw.remove();},1000);
+    },500);
+}
+
+</script>
+
+</body>
+</html>
